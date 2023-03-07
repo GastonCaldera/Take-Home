@@ -21,13 +21,19 @@ export class CommitService {
     return {
       s: 200,
       m: 'list all commit history successfully',
-      d: commitsHistory.data.map((record) => {
-        return {
-          author: record.commit.author.name,
-          message: record.commit.message,
-          date: record.commit.author.date,
-        };
-      }),
+      d: {
+        more:
+          commitsHistory.data[commitsHistory.data.length - 1].parents.length > 0
+            ? true
+            : false,
+        commits: commitsHistory.data.map((record) => {
+          return {
+            author: record.commit.author.name,
+            message: record.commit.message,
+            date: record.commit.author.date,
+          };
+        }),
+      },
     };
   }
   async test(): Promise<string> {

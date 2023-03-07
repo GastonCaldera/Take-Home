@@ -6,12 +6,13 @@ import Search from '@/components/search';
 import CommitsTable from '@/components/CommitsTable';
 import Loading from '@/components/Loading';
 import { getAllCommits } from '@/api';
-import { CommitsType } from '@/type/commits';
+import { CommitType, TableInfoType } from '@/type/commits';
 
 export default function Home() {
   const [isLoading, setIsloading] = useState<boolean>(false)
+  const [commitsError, setCommitsError] = useState<boolean>(false)
   const [search, setSearch] = useState<string>('')
-  const [commits, setCommits] = useState<Array<CommitsType>>([])
+  const [commitsInfo, setCommitsInfo] = useState<TableInfoType>({ more: false, commits: [] })
   const [page, setPage] = useState<number>(1)
 
   useEffect(() => {
@@ -19,10 +20,13 @@ export default function Home() {
       setIsloading(true)
       getAllCommits(search, page)
         .then((response) => {
-          setCommits(response.d)
+          setCommitsInfo(response.d)
           setIsloading(false)
         }).catch((error) => {
-          setCommits([])
+          setCommitsInfo({
+            more: false,
+            commits: []
+          })
           setIsloading(false)
         })
     }
@@ -34,9 +38,7 @@ export default function Home() {
       {isLoading ? (
         <Loading />
       ) : null}
-      <>
-        <CommitsTable commits={commits}></CommitsTable>
-      </>
+      <CommitsTable tableInfo={commitsInfo}></CommitsTable>
     </main>
   );
 };

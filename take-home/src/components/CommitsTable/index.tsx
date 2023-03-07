@@ -8,11 +8,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { CommitsType } from '@/type/commits';
+import { TableInfoType } from '@/type/commits';
 
 const AOS = require("aos");
 
-export default function CommitsTable({ commits }: { commits: Array<CommitsType> }) {
+export default function CommitsTable({ tableInfo }: { tableInfo: TableInfoType }) {
   useEffect(() => {
     AOS.init();
   }, []);
@@ -33,7 +33,7 @@ export default function CommitsTable({ commits }: { commits: Array<CommitsType> 
           </TableRow>
         </TableHead>
         <TableBody>
-          {commits?.map((row) => (
+          {tableInfo.commits?.map((row) => (
             <TableRow key={row.message}>
               <TableCell component="th" scope="row">
                 {row.message}
