@@ -1,38 +1,45 @@
 import { Injectable } from '@nestjs/common';
-import config from 'src/config';
-import { Response } from 'src/entity/response';
+import config from '../config/index';
+import { Response } from '../entity/response';
 
 @Injectable()
-export class AppService {
+export class CommitService {
   async getCommit(commitDto): Promise<Response> {
-    try {
-      const { owner, repo, skip, limit } = commitDto;
-      const commitsHistory = await config.octokit.request(
-        `GET /repos/${owner}/${repo}/commits`,
-        {
-          owner: owner,
-          repo: repo,
-          per_page: limit,
-          page: skip,
-          headers: {
-            'X-GitHub-Api-Version': '2022-11-28',
-          },
+    // try {
+    const { owner, repo, skip, limit } = commitDto;
+    const commitsHistory = await config.octokit.request(
+      `GET /repos/${owner}/${repo}/commits`,
+      {
+        owner: owner,
+        repo: repo,
+        per_page: limit,
+        page: skip,
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28',
         },
-      );
-      return {
-        s: 200,
-        m: 'list all commit history successfully',
-        d: commitsHistory.data.map((record) => {
-          return {
-            author: record.commit.author.name,
-            message: record.commit.message,
-            date: record.commit.author.date,
-          };
-        }),
-      };
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
+      },
+    );
+    return {
+      s: 200,
+      m: 'list all commit history successfully',
+      d: commitsHistory.data.map((record) => {
+        return {
+          author: record.commit.author.name,
+          message: record.commit.message,
+          date: record.commit.author.date,
+        };
+      }),
+    };
+    // } catch (error) {
+    //   console.log(error);
+    //   return {
+    //     s: error?.status,
+    //     m: error?.response?.data?.message,
+    //     d: '',
+    //   };
+    // }
+  }
+  async test(): Promise<string> {
+    return 'hola mundo';
   }
 }

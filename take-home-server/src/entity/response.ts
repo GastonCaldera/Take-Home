@@ -7,5 +7,5 @@ class Commit {
 export class Response {
   s: Number;
   m: string;
-  d: Array<Commit>;
+  d: Array<Commit> | string;
 }
