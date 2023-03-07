@@ -8,42 +8,57 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import TablePaginaton from "../TablePaginaton";
 import { TableInfoType } from '@/type/commits';
+
 
 const AOS = require("aos");
 
-export default function CommitsTable({ tableInfo }: { tableInfo: TableInfoType }) {
+export default function CommitsTable({ tableInfo, pagePaginaton, onPageChange }: { tableInfo: TableInfoType, pagePaginaton: number, onPageChange(page: number): void }) {
+  const onChangePagination = (page: number) => {
+    onPageChange(page)
+  }
   useEffect(() => {
     AOS.init();
   }, []);
   return (
-    <TableContainer
-      component={Paper}
-      style={{ maxWidth: 725, width: '100%', marginTop: '10px' }}
-      data-aos-delay="200"
-      data-aos-duration="800"
-      data-aos="flip-right"
-    >
-      <Table sx={{ width: '100%' }} aria-label="caption table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Commit</TableCell>
-            <TableCell align="right">Author</TableCell>
-            <TableCell align="right">Date</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {tableInfo?.commits?.map((row) => (
-            <TableRow key={row.message}>
-              <TableCell component="th" scope="row">
-                {row.message}
-              </TableCell>
-              <TableCell align="right">{row.author}</TableCell>
-              <TableCell align="right">{row.date}</TableCell>
+    <>
+      <TableContainer
+        component={Paper}
+        style={{ maxWidth: 725, width: '100%', marginTop: '10px' }}
+        data-aos-delay="200"
+        data-aos-duration="800"
+        data-aos="flip-right"
+      >
+        <Table sx={{ width: '100%' }} aria-label="caption table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Commit</TableCell>
+              <TableCell align="right">Author</TableCell>
+              <TableCell align="right">Date</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {tableInfo?.commits?.map((row, index) => (
+              <TableRow key={`${index} row.message`}>
+                <TableCell component="th" scope="row">
+                  {row.message}
+                </TableCell>
+                <TableCell align="right">{row.author}</TableCell>
+                <TableCell align="right">{row.date}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {tableInfo?.more || pagePaginaton > 1 ? (
+        <TablePaginaton
+          leftButton={pagePaginaton === 1 ? false : true}
+          rightButton={tableInfo?.more ? true : false}
+          pagePaginaton={pagePaginaton}
+          onClick={(page) => onChangePagination(page)}
+        />
+      ) : null}
+    </>
   );
 }

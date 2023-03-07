@@ -8,7 +8,7 @@ export async function getAllCommits(url: string, page: number) {
       owner: arrayUrl[arrayUrl.length - 2],
       repo: arrayUrl[arrayUrl.length - 1],
       skip: page,
-      limit: page * 10,
+      limit: 10,
     });
     return response.data;
   } catch (error) {
