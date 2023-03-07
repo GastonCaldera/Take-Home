@@ -12,7 +12,6 @@ export async function getAllCommits(url: string, page: number) {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
-    return 'error';
+    return error;
   }
 }

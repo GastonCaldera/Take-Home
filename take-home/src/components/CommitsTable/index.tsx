@@ -21,7 +21,7 @@ export default function CommitsTable({ tableInfo }: { tableInfo: TableInfoType }
       component={Paper}
       style={{ maxWidth: 725, width: '100%', marginTop: '10px' }}
       data-aos-delay="200"
-      data-aos-duration="1000"
+      data-aos-duration="800"
       data-aos="flip-right"
     >
       <Table sx={{ width: '100%' }} aria-label="caption table">
@@ -33,7 +33,7 @@ export default function CommitsTable({ tableInfo }: { tableInfo: TableInfoType }
           </TableRow>
         </TableHead>
         <TableBody>
-          {tableInfo.commits?.map((row) => (
+          {tableInfo?.commits?.map((row) => (
             <TableRow key={row.message}>
               <TableCell component="th" scope="row">
                 {row.message}

@@ -5,12 +5,13 @@ import Header from '@/components/header';
 import Search from '@/components/search';
 import CommitsTable from '@/components/CommitsTable';
 import Loading from '@/components/Loading';
+import ErrorMessage from '@/components/errorMessage';
 import { getAllCommits } from '@/api';
-import { CommitType, TableInfoType } from '@/type/commits';
+import { TableInfoType } from '@/type/commits';
 
 export default function Home() {
   const [isLoading, setIsloading] = useState<boolean>(false)
-  const [commitsError, setCommitsError] = useState<boolean>(false)
+  const [fetchtError, setFetchtError] = useState<boolean>(false)
   const [search, setSearch] = useState<string>('')
   const [commitsInfo, setCommitsInfo] = useState<TableInfoType>({ more: false, commits: [] })
   const [page, setPage] = useState<number>(1)
@@ -18,11 +19,21 @@ export default function Home() {
   useEffect(() => {
     if (search !== "") {
       setIsloading(true)
+      setFetchtError(false)
       getAllCommits(search, page)
         .then((response) => {
-          setCommitsInfo(response.d)
           setIsloading(false)
+          if (response.s === 200) {
+            setCommitsInfo(response.d)
+          } else {
+            setFetchtError(true)
+            setCommitsInfo({
+              more: false,
+              commits: []
+            })
+          }
         }).catch((error) => {
+          setFetchtError(true)
           setCommitsInfo({
             more: false,
             commits: []
@@ -38,7 +49,12 @@ export default function Home() {
       {isLoading ? (
         <Loading />
       ) : null}
-      <CommitsTable tableInfo={commitsInfo}></CommitsTable>
+      {commitsInfo?.commits.length > 0 && !isLoading ? (
+        <CommitsTable tableInfo={commitsInfo}></CommitsTable>
+      ) : null}
+      {fetchtError ? (
+        <ErrorMessage />
+      ) : null}
     </main>
   );
 };

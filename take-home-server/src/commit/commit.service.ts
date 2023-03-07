@@ -36,7 +36,4 @@ export class CommitService {
       },
     };
   }
-  async test(): Promise<string> {
-    return 'hola mundo';
-  }
 }
