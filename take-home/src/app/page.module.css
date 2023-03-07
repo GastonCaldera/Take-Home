@@ -5,7 +5,10 @@
   padding: 6rem;
   min-height: 100vh;
 }
-
+.error_message {
+  text-align: center;
+  color: black;
+}
 .title {
   text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
   color: aliceblue;
@@ -33,4 +36,10 @@
 .search_button:hover {
   background: #2e394a;
   border: #1f2630 0.5px solid;
+}
+
+@media only screen and (max-width: 600px) {
+  .main {
+    padding: 3rem;
+  }
 }

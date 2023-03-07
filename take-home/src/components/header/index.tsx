@@ -25,9 +25,11 @@ export default function Header() {
             <Typography
                 variant='h6'
                 className={`${rajdhani.className}`}
+                style={{ textAlign: "center" }}
                 data-aos-delay="200"
                 data-aos-duration="1000"
-                data-aos="fade-right">
+                data-aos="fade-right"
+            >
                 The best way to track your commits!
             </Typography>
         </>

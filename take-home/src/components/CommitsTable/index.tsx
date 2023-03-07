@@ -1,6 +1,7 @@
 "use client";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
+import { useMediaQuery } from 'react-responsive'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,11 +11,12 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePaginaton from "../TablePaginaton";
 import { TableInfoType } from '@/type/commits';
-
+import { textCut } from "@/utils/global";
 
 const AOS = require("aos");
 
 export default function CommitsTable({ tableInfo, pagePaginaton, onPageChange }: { tableInfo: TableInfoType, pagePaginaton: number, onPageChange(page: number): void }) {
+  const isMobile = useMediaQuery({ maxWidth: 567 })
   const onChangePagination = (page: number) => {
     onPageChange(page)
   }
@@ -34,7 +36,9 @@ export default function CommitsTable({ tableInfo, pagePaginaton, onPageChange }:
           <TableHead>
             <TableRow>
               <TableCell>Commit</TableCell>
-              <TableCell align="right">Author</TableCell>
+              {!isMobile ? (
+                <TableCell align="right">Author</TableCell>
+              ) : null}
               <TableCell align="right">Date</TableCell>
             </TableRow>
           </TableHead>
@@ -42,9 +46,11 @@ export default function CommitsTable({ tableInfo, pagePaginaton, onPageChange }:
             {tableInfo?.commits?.map((row, index) => (
               <TableRow key={`${index} row.message`}>
                 <TableCell component="th" scope="row">
-                  {row.message}
+                  {textCut(row.message)}
                 </TableCell>
-                <TableCell align="right">{row.author}</TableCell>
+                {!isMobile ? (
+                  <TableCell align="right">{row.author}</TableCell>
+                ) : null}
                 <TableCell align="right">{row.date}</TableCell>
               </TableRow>
             ))}
