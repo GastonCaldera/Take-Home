@@ -5,7 +5,6 @@ import { Response } from '../entity/response';
 @Injectable()
 export class CommitService {
   async getCommit(commitDto): Promise<Response> {
-    // try {
     const { owner, repo, skip, limit } = commitDto;
     const commitsHistory = await config.octokit.request(
       `GET /repos/${owner}/${repo}/commits`,
@@ -30,14 +29,6 @@ export class CommitService {
         };
       }),
     };
-    // } catch (error) {
-    //   console.log(error);
-    //   return {
-    //     s: error?.status,
-    //     m: error?.response?.data?.message,
-    //     d: '',
-    //   };
-    // }
   }
   async test(): Promise<string> {
     return 'hola mundo';

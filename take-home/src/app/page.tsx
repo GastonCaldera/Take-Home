@@ -1,15 +1,19 @@
 "use client";
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import Header from '@/components/header';
 import Search from '@/components/search';
-import axios from 'axios';
+import CommitsTable from '@/components/CommitsTable';
+import Loading from '@/components/Loading';
+import { getAllCommits } from '@/api';
+import { CommitsType } from '@/type/commits';
 
 export default function Home() {
   const [isLoading, setIsloading] = useState<boolean>(false)
   const [search, setSearch] = useState<string>('')
-  const [commits, setCommits] = useState<Array<string>>([])
+  const [commits, setCommits] = useState<Array<CommitsType>>([])
   const [page, setPage] = useState<number>(1)
+
   useEffect(() => {
     if (search !== "") {
       setIsloading(true)
@@ -27,25 +31,14 @@ export default function Home() {
     <main className={styles.main}>
       <Header />
       <Search onClick={(value) => { setSearch(value) }} isLoading={isLoading} />
+      {isLoading ? (
+        <Loading />
+      ) : null}
+      <>
+        <CommitsTable commits={commits}></CommitsTable>
+      </>
     </main>
   );
 };
 
-export async function getAllCommits(url: string, page: number) {
-  try {
-    const baseUrl = process.env.API
-    const arrayUrl = url.split("/").filter((element) => element !== '')
-    const response = await axios.post(`${baseUrl}/commit`, {
-      owner: arrayUrl[arrayUrl.length - 2],
-      repo: arrayUrl[arrayUrl.length - 1],
-      skip: page,
-      limit: page * 10
-    })
-    return response.data
-  } catch (error) {
-    console.log(error)
-    return 'error'
-  }
 
-  // const response = await axios()
-}
