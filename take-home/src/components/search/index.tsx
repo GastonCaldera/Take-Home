@@ -1,34 +1,23 @@
 "use client";
 import "aos/dist/aos.css";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../../app/page.module.css';
-import { Button, TextField, Box } from '@mui/material'
-import { styled } from '@mui/material/styles';
+import { Button, Box } from '@mui/material';
+import { CustomTextField } from "../CustomTextField";
+import SearchIcon from '@mui/icons-material/Search';
 
 const AOS = require("aos");
 
-const CustomTextField = styled(TextField)({
-    backgroundColor: 'white',
-    borderRadius: '5px 0px 0px 5px',
-    width: '100%',
-    maxWidth: '600px',
-    '& .MuiOutlinedInput-root': {
-        '& fieldset': {
-            borderRadius: '5px 0px 0px 5px',
-            borderColor: '#0dc06f',
-        },
-        '&:hover fieldset': {
-            borderRadius: '5px 0px 0px 5px',
-            border: '#0dc06f 2px solid',
-        },
-        '&.Mui-focused fieldset': {
-            borderRadius: '5px 0px 0px 5px',
-            borderColor: '#0dc06f',
-        },
-    },
-});
-
-export default function Search() {
+export default function Search({ onClick, isLoading }: { onClick(value: string): void, isLoading: boolean }) {
+    const [searchText, setSearchText] = useState<string>('')
+    const onChangeSearchInput = (value: string) => {
+        setSearchText(value)
+    }
+    const onClickSearch = () => {
+        if (searchText.trim() !== "") {
+            onClick(searchText.trim())
+        }
+    }
     useEffect(() => {
         AOS.init();
     }, []);
@@ -39,8 +28,22 @@ export default function Search() {
             data-aos-duration="1000"
             data-aos="fade-up"
         >
-            <CustomTextField placeholder='https://github.com/owner/repo' size="small"></CustomTextField>
-            <Button className={styles.search_button} size="small">Search</Button>
+            <CustomTextField
+                value={searchText || ''}
+                placeholder='https://github.com/GastonCaldera/Take-Home'
+                size="small"
+                onChange={(e) => onChangeSearchInput(e.target.value)}
+            >
+            </CustomTextField>
+            <Button
+                className={styles.search_button}
+                size="small"
+                onClick={onClickSearch}
+                startIcon={<SearchIcon />}
+                disabled={isLoading}
+            >
+                Search
+            </Button>
         </Box>
     )
 }
