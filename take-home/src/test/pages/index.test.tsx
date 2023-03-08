@@ -3,39 +3,39 @@ import Home from '../../pages/index';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 
-// describe('Home inital state', () => {
-//   it('render Header', () => {
-//     render(<Home />);
-//     const title1 = screen.getByText(/Take-Home$/i);
-//     const title2 = screen.getByText(/The best way to track your commits!$/i);
-//     expect(title1).toHaveClass('aos-animate');
-//     expect(title2).toHaveClass('aos-animate');
-//   });
-//   it('render search bar', () => {
-//     const { container } = render(<Home />);
-//     const searchBox = container.getElementsByClassName('search_box');
-//     const searchInput = screen.getByRole('textbox');
-//     const searchButton = screen.getByRole('button', { name: /search$/i });
-//     expect(searchBox[0]).toHaveClass('aos-animate');
-//     expect(searchInput).toBeInTheDocument();
-//     expect(searchButton).toBeInTheDocument();
-//   });
-//   it('Elements that should not be in the initial state', () => {
-//     render(<Home />);
-//     const loading = screen.queryByTestId(/loading$/i);
-//     const errorMessage = screen.queryByText(/Something went wrong 😓.$/i);
-//     const commitsTable = screen.queryByTestId(/tableContainer$/i);
-//     const tablePaginaton = screen.queryByTestId(/tablePaginaton$/i);
-//     expect(loading).not.toBeInTheDocument();
-//     expect(errorMessage).not.toBeInTheDocument();
-//     expect(commitsTable).not.toBeInTheDocument();
-//     expect(tablePaginaton).not.toBeInTheDocument();
-//   });
-// });
-
-describe('home test functionality', () => {
-  it('type the correct url in the input and click search button', async () => {
+describe('Home inital state', () => {
+  it('Check Header', () => {
+    render(<Home />);
+    const title1 = screen.getByText(/Take-Home$/i);
+    const title2 = screen.getByText(/The best way to track your commits!$/i);
+    expect(title1).toHaveClass('aos-animate');
+    expect(title2).toHaveClass('aos-animate');
+  });
+  it('Check search bar', () => {
     const { container } = render(<Home />);
+    const searchBox = container.getElementsByClassName('search_box');
+    const searchInput = screen.getByRole('textbox');
+    const searchButton = screen.getByRole('button', { name: /search$/i });
+    expect(searchBox[0]).toHaveClass('aos-animate');
+    expect(searchInput).toBeInTheDocument();
+    expect(searchButton).toBeInTheDocument();
+  });
+  it('Elements that should not be in the initial state', () => {
+    render(<Home />);
+    const loading = screen.queryByTestId(/loading$/i);
+    const errorMessage = screen.queryByText(/Something went wrong 😓.$/i);
+    const commitsTable = screen.queryByTestId(/tableContainer$/i);
+    const tablePaginaton = screen.queryByTestId(/tablePaginaton$/i);
+    expect(loading).not.toBeInTheDocument();
+    expect(errorMessage).not.toBeInTheDocument();
+    expect(commitsTable).not.toBeInTheDocument();
+    expect(tablePaginaton).not.toBeInTheDocument();
+  });
+});
+
+describe('home e2e test', () => {
+  it('type the correct url in the input and click search button', async () => {
+    render(<Home />);
     const user = userEvent.setup();
     const searchInput = screen.getByRole('textbox');
     const searchButton = screen.getByRole('button', { name: /search$/i });
@@ -172,10 +172,33 @@ describe('home test functionality', () => {
 
     // Checking rows and if pagination exist
     let tableRows = screen.getAllByRole('rowheader');
-    expect(tableRows.length).toBeGreaterThanOrEqual(1)
+    expect(tableRows.length).toBeGreaterThanOrEqual(1);
     expect(tableRows.length).toBeLessThan(10);
     expect(tablePaginatonButtonLeft).not.toBeInTheDocument();
     expect(tablePaginatonButtonRight).not.toBeInTheDocument();
-
   })
+  it('Check invalid value', async () => {
+    render(<Home />);
+    const user = userEvent.setup();
+    const searchInput = screen.getByRole('textbox');
+    const searchButton = screen.getByRole('button', { name: /search$/i });
+
+    // Adding url and clicking button
+    await user.type(searchInput, 'this is a invalid value');
+    await user.click(searchButton);
+    let loading = screen.queryByTestId(/loading$/i);
+    // wait for response
+    await waitFor(() => {
+      expect(loading).not.toBeInTheDocument();
+    })
+    expect(searchButton).toBeEnabled();
+
+    // Check if table not exist
+    let commitsTable = screen.queryByTestId(/tableContainer$/i);
+    expect(commitsTable).not.toBeInTheDocument();
+
+    // Check error message
+    let errorMessage = screen.queryByText(/Something went wrong 😓.$/i);
+    expect(errorMessage).toBeInTheDocument();
+  });
 });
