@@ -1,7 +1,7 @@
 "use client";
 import "aos/dist/aos.css";
 import { useEffect } from 'react';
-import styles from '../../app/page.module.css';
+import styles from '@/styles/Home.module.css'
 import { lobster, rajdhani } from '@/assets/fonts';
 import { Typography } from '@mui/material'
 

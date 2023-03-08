@@ -1,7 +1,7 @@
 "use client";
 import "aos/dist/aos.css";
 import { useEffect, useState } from 'react';
-import styles from '../../app/page.module.css';
+import styles from '@/styles/Home.module.css'
 import { Button, Box } from '@mui/material';
 import { CustomTextField } from "../CustomTextField";
 import SearchIcon from '@mui/icons-material/Search';

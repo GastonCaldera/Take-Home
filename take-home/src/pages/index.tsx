@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
-import styles from './page.module.css';
+import styles from '@/styles/Home.module.css'
 import Header from '@/components/Header';
 import Search from '@/components/Search';
 import CommitsTable from '@/components/CommitsTable';
@@ -66,5 +66,3 @@ export default function Home() {
     </StyledEngineProvider>
   );
 };
-
-
