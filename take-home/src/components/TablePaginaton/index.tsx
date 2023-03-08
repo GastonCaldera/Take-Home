@@ -21,6 +21,7 @@ export default function TablePaginaton(
             data-aos-duration="800"
             data-aos="flip-right"
             data-aos-anchor-placement="top-botton"
+            data-testid='tablePaginaton'
         >
             <IconButton disabled={!leftButton} onClick={() => onClickButton(-1)}>
                 <ArrowBackIosNew style={{ color: leftButton ? "#415574" : "" }} />

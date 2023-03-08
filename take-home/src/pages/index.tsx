@@ -6,8 +6,8 @@ import Search from '@/components/Search';
 import CommitsTable from '@/components/CommitsTable';
 import Loading from '@/components/Loading';
 import ErrorMessage from '@/components/ErrorMessage';
-import { getAllCommits } from '@/api';
-import { TableInfoType } from '@/type/commits';
+import { getAllCommits } from '../api';
+import { TableInfoType } from '../type/commits';
 import { StyledEngineProvider } from '@mui/material/styles';
 
 export default function Home() {

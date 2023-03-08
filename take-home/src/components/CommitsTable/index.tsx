@@ -10,8 +10,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePaginaton from "../TablePaginaton";
-import { TableInfoType } from '@/type/commits';
-import { textCut } from "@/utils/global";
+import { TableInfoType } from '../../type/commits';
+import { textCut } from "../..//utils/global";
 
 const AOS = require("aos");
 
@@ -31,6 +31,7 @@ export default function CommitsTable({ tableInfo, pagePaginaton, onPageChange }:
         data-aos-delay="200"
         data-aos-duration="800"
         data-aos="flip-right"
+        data-testid='tableContainer'
       >
         <Table sx={{ width: '100%' }} aria-label="caption table">
           <TableHead>

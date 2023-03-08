@@ -33,6 +33,7 @@ export default function Search({ onClick, isLoading }: { onClick(value: string):
                 placeholder='https://github.com/GastonCaldera/Take-Home'
                 size="small"
                 onChange={(e) => onChangeSearchInput(e.target.value)}
+                data-testid='searchInput'
             >
             </CustomTextField>
             <Button

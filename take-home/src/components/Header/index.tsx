@@ -1,9 +1,9 @@
 "use client";
 import "aos/dist/aos.css";
 import { useEffect } from 'react';
-import styles from '@/styles/Home.module.css'
-import { lobster, rajdhani } from '@/assets/fonts';
-import { Typography } from '@mui/material'
+import styles from '@/styles/Home.module.css';
+import { lobster, rajdhani } from '../../assets/fonts';
+import { Typography } from '@mui/material';
 
 const AOS = require("aos");
 

@@ -3,7 +3,7 @@ import styles from '@/styles/Home.module.css'
 import "aos/dist/aos.css";
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
-import { rajdhani } from '@/assets/fonts';
+import { rajdhani } from '../../assets/fonts';
 
 export default function ErrorMessage() {
     return (
