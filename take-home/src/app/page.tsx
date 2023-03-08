@@ -8,6 +8,7 @@ import Loading from '@/components/Loading';
 import ErrorMessage from '@/components/ErrorMessage';
 import { getAllCommits } from '@/api';
 import { TableInfoType } from '@/type/commits';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 export default function Home() {
   const [isLoading, setIsloading] = useState<boolean>(false)
@@ -48,19 +49,21 @@ export default function Home() {
     }
   }, [search, page])
   return (
-    <main className={styles.main}>
-      <Header />
-      <Search onClick={(value) => { onClickSearch(value) }} isLoading={isLoading} />
-      {isLoading ? (
-        <Loading />
-      ) : null}
-      {commitsInfo?.commits.length > 0 && !isLoading ? (
-        <CommitsTable tableInfo={commitsInfo} pagePaginaton={page} onPageChange={(newPage: number) => setPage(newPage)}></CommitsTable>
-      ) : null}
-      {fetchtError ? (
-        <ErrorMessage />
-      ) : null}
-    </main>
+    <StyledEngineProvider injectFirst>
+      <main className={styles.main}>
+        <Header />
+        <Search onClick={(value) => { onClickSearch(value) }} isLoading={isLoading} />
+        {isLoading ? (
+          <Loading />
+        ) : null}
+        {commitsInfo?.commits.length > 0 && !isLoading ? (
+          <CommitsTable tableInfo={commitsInfo} pagePaginaton={page} onPageChange={(newPage: number) => setPage(newPage)}></CommitsTable>
+        ) : null}
+        {fetchtError ? (
+          <ErrorMessage />
+        ) : null}
+      </main>
+    </StyledEngineProvider>
   );
 };
 
