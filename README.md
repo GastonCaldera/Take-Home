@@ -1,6 +1,6 @@
 # Take-Home
 
-take-home is a small project where you can keep track of your commits with a quick and easy interface
+Take-Home is a small project where you can keep track of your commits with a quick and easy interface.
 
 ## Installation
 ### Backend Server
@@ -56,6 +56,3 @@ Go to take-home directory and run.
 ```bash
 npm run test
 ```
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
